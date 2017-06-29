@@ -10,8 +10,10 @@ body {
 }
 
 h1, h2, h3 {
-  color: #000;
+    color: #000;
+    text-align: center;
 }
+
 h1 {
   font-size: 2.5em
 }
@@ -31,4 +33,9 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+blockquote {
+    line-height: 1.7em; 
+    font-size: 0.81em;
 }
