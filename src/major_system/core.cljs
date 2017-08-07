@@ -1,5 +1,5 @@
 (ns major-system.core
-  (:require [reagent.core :as reagent :refer [atom]]
+  (:require [reagent.core :as r]
             [clojure.math.combinatorics :as combo :refer [cartesian-product]]))
 
 ;; -------------------------
@@ -31,7 +31,7 @@
 ;; -------------------------
 ;; Views
 
-(def app-state (atom {:number 802}))
+(def app-state (r/atom {:number 802}))
 
 (defn explanation []
   [:div
@@ -72,7 +72,7 @@
 ;; Initialize app
 
 (defn mount-root []
-  (reagent/render [home-page] (.getElementById js/document "app")))
+  (r/render [home-page] (.getElementById js/document "app")))
 
 (defn init! []
   (mount-root))
