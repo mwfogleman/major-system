@@ -20,8 +20,7 @@
 (defn convert-to-stem
   "Converts a number to all possible mnemonic stems using the Major System, without including vowels or filtering to valid words."
   [input]
-  (let [number (cond (string? input) input (number? input) (str input))
-        numbers (map int (re-seq #"\d" number))
+  (let [numbers (map int (re-seq #"\d" input))
         values (for [n numbers] (get major-system n))]
     (->> values
          (apply cartesian-product)
@@ -31,7 +30,7 @@
 ;; -------------------------
 ;; Views
 
-(def app-state (r/atom {:number 802}))
+(def app-state (r/atom "802"))
 
 (defn explanation []
   [:div
@@ -49,16 +48,16 @@
 (defn major-input []
   [:div
    [:p "Put in a number here:"]
-   [:p [:center [:input {:placeholder (:number @app-state)
+   [:p [:center [:input {:placeholder @app-state
                          :type "text"
-                         :on-change #(swap! app-state assoc :number (-> % .-target .-value))}]]]])
+                         :on-change #(reset! app-state (-> % .-target .-value))}]]]])
 
 (defn major-output []
-  (let [n (:number @app-state)])
-  [:div
-   [:p "Here are all possible conversions of that number into the consonant sounds that are used in the Major System:"]
-   (for [v (convert-to-stem (:number @app-state))]
-     [:p v])])
+  (let [n @app-state]
+    [:div
+     [:p "Here are all possible conversions of that number into the consonant sounds that are used in the Major System:"]
+     (for [v (convert-to-stem n)]
+       [:p v])]))
 
 (defn home-page []
   [:div
